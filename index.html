@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MetaCore - Solutions Tech</title>
+    <link rel="icon" type="image/x-icon" href="minilogo.ico">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <video autoplay muted loop id="bg-video">
+        <source src="bg.webm" type="video/webm">
+    </video>
+
+    <header class="header">
+        <nav class="navbar">
+            <a href="#" class="logo">
+                <img src="logo.png" alt="MetaCore Logo" class="logo-img">
+            </a>
+            <div class="search-container">
+                <input type="text" placeholder="Rechercher..." class="search-input">
+                <ul class="suggestions-list"></ul>
+                <div class="error-container">
+                    <span class="error-icon">&#x2716;</span>
+                    <span class="error-message"></span>
+                </div>
+                <button type="submit" class="search-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="nav-links">
+                <a href="#pro-section">Professionnels</a>
+                <a href="#particulier-section">Particuliers</a>
+                <a href="#contact-section" id="email-button">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <section class="hero-section">
+            <h1 class="hero-title">MetaCore Solutions</h1>
+            <p class="hero-subtitle">Votre partenaire pour la création de logiciels, sites web et le dépannage informatique.</p>
+        </section>
+    </main>
+
+    <section class="service-section" id="pro-section">
+        <h2>Pour les professionnels</h2>
+        <div class="card-container">
+            <div class="service-card">
+                <h3 class="card-title">Création de logiciels</h3>
+                <p class="card-description">Développons des logiciels sur mesure pour optimiser vos processus et améliorer votre productivité.</p>
+                <button class="cta-button service-details-button" data-service="logiciel">En savoir plus</button>
+            </div>
+            <div class="service-card">
+                <h3 class="card-title">Création de sites web</h3>
+                <p class="card-description">Concevons des sites web modernes et réactifs qui capti­veront votre audience et valoriseront votre marque.</p>
+                <button class="cta-button service-details-button" data-service="sites-web">En savoir plus</button>
+            </div>
+            <div class="service-card">
+                <h3 class="card-title">Applications mobiles</h3>
+                <p class="card-description">Des applications mobiles performantes pour iOS et Android qui vous connecteront directement à vos clients.</p>
+                <button class="cta-button service-details-button" data-service="applications-mobiles">En savoir plus</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="service-section" id="particulier-section">
+        <h2>Pour les particuliers</h2>
+        <div class="card-container">
+            <div class="service-card">
+                <h3 class="card-title">Réparation d'ordinateur</h3>
+                <p class="card-description">Diagnostic et réparation de votre PC en panne pour lui redonner une seconde vie.</p>
+                <button class="cta-button service-details-button" data-service="reparation">En savoir plus</button>
+            </div>
+            <div class="service-card">
+                <h3 class="card-title">Optimisation PC</h3>
+                <p class="card-description">Nettoyage et accélération de votre ordinateur pour des performances optimales.</p>
+                <button class="cta-button service-details-button" data-service="optimisation">En savoir plus</button>
+            </div>
+            <div class="service-card">
+                <h3 class="card-title">Montage d'ordinateur</h3>
+                <p class="card-description">Assemblage de votre PC sur mesure, pour le gaming ou le travail, selon vos besoins.</p>
+                <button class="cta-button service-details-button" data-service="montage-pc">En savoir plus</button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer" id="contact-section">
+        <p>Contactez-nous pour un devis gratuit.</p>
+        <div class="footer-buttons-container">
+            <button class="cta-button" id="contact-button">Envoyer un mail</button>
+            <button class="cta-button copy-button" id="copy-email-button" title="Copier l'adresse e-mail">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                    <path d="M9.5 1a.5.5 0 0 1 .5.5v1h-2v-1a.5.5 0 0 1 .5-.5h1zm-3 0A.5.5 0 0 1 7 1.5v1H5v-1a.5.5 0 0 1 .5-.5h1zm4 0a.5.5 0 0 1 .5.5v1h-2v-1a.5.5 0 0 1 .5-.5h1zm-3 0A.5.5 0 0 1 7 1.5v1H5v-1a.5.5 0 0 1 .5-.5h1zM4 2v1h8V2a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1zM9.5 1a.5.5 0 0 1 .5.5v1h-2v-1a.5.5 0 0 1 .5-.5h1zm-3 0A.5.5 0 0 1 7 1.5v1H5v-1a.5.5 0 0 1 .5-.5h1zm4 0a.5.5 0 0 1 .5.5v1h-2v-1a.5.5 0 0 1 .5-.5h1zm-3 0A.5.5 0 0 1 7 1.5v1H5v-1a.5.5 0 0 1 .5-.5h1zM4 2v1h8V2a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1zM9.5 1a.5.5 0 0 1 .5.5v1h-2v-1a.5.5 0 0 1 .5-.5h1zm-3 0A.5.5 0 0 1 7 1.5v1H5v-1a.5.5 0 0 1 .5-.5h1zm4 0a.5.5 0 0 1 .5.5v1h-2v-1a.5.5 0 0 1 .5-.5h1zm-3 0A.5.5 0 0 1 7 1.5v1H5v-1a.5.5 0 0 1 .5-.5h1zM4 2v1h8V2a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1z"/>
+                </svg>
+            </button>
+            <span id="copy-feedback" class="copy-feedback"></span>
+        </div>
+        <p>&copy; 2025 MetaCore. Tous droits réservés.</p>
+    </footer>
+    
+    <div class="modal-overlay" id="email-modal-overlay">
+        <div class="modal-container">
+            <button class="close-button" id="close-email-modal">&times;</button>
+            <form id="contact-form">
+                <h2>Envoyer un e-mail</h2>
+                <input type="text" id="name-input" placeholder="Votre prénom" required>
+                <input type="tel" id="phone-input" placeholder="Votre numéro de téléphone (facultatif)">
+                <input type="text" id="subject-input" placeholder="Objet" required>
+                <textarea id="message-input" placeholder="Votre message" required></textarea>
+                
+                <div class="form-buttons">
+                    <button type="submit" class="cta-button">Envoyer</button>
+                    <button type="button" class="cta-button cancel-button" id="cancel-form">Annuler</button>
+                </div>
+            </form>
+            <div class="modal-error-message" id="modal-error"></div>
+        </div>
+    </div>
+    
+    <div class="modal-overlay" id="service-modal-overlay">
+        <div class="modal-container service-modal">
+            <button class="close-button" id="close-service-modal">&times;</button>
+            <div id="service-modal-content">
+                <h2 id="service-title"></h2>
+                <p id="service-description"></p>
+                <button class="cta-button" id="service-devis-button">Devis gratuit</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,636 @@
+:root {
+    --primary-color: #6a11cb;
+    --secondary-color: #2575fc;
+    --text-color: #e0e0e0;
+    --card-bg: rgba(255, 255, 255, 0.1);
+    --button-bg: rgba(255, 255, 255, 0.2);
+    --border-radius-large: 20px;
+    --border-radius-small: 10px;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
+    position: relative;
+    overflow-x: hidden;
+    padding-top: 100px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+#bg-video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -2;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    z-index: -1;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInFromLeft {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+@keyframes highlight-grow {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes highlight-light {
+    0% {
+        left: -100%;
+        transform: skewX(-30deg);
+    }
+    100% {
+        left: 200%;
+        transform: skewX(-30deg);
+    }
+}
+
+@keyframes modal-fade-in {
+    from { opacity: 0; transform: translateY(-50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Éléments généraux */
+.header {
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    border-radius: var(--border-radius-large);
+    
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+    max-width: 1200px;
+    z-index: 999;
+    
+    transition: background 0.8s ease-in-out, backdrop-filter 0.8s ease-in-out, top 0.8s ease-in-out, border-radius 0.8s ease-in-out, width 0.8s ease-in-out, max-width 0.8s ease-in-out;
+}
+
+.header.header-scrolled {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(15px);
+    border-radius: 0;
+    top: 0;
+    width: 100%;
+    max-width: 100%;
+    padding: 10px 0;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo-img {
+    height: 40px;
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover .logo-img {
+    transform: scale(1.1);
+}
+
+.nav-links {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-links a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 10px 15px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    background: var(--card-bg);
+    border-radius: var(--border-radius-small);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 5px;
+    transition: all 0.3s ease;
+    flex-grow: 1;
+    margin: 0 40px;
+    position: relative;
+}
+
+.search-container.shake {
+    animation: shake 0.5s;
+}
+
+.search-container:focus-within {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.search-input {
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--text-color);
+    padding: 5px 10px;
+    width: 100%;
+}
+
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.search-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-color);
+    padding: 5px;
+}
+
+/* Styles pour les suggestions */
+.suggestions-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    margin: 5px 0 0 0;
+    padding: 0;
+    list-style: none;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: var(--border-radius-small);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 1000;
+}
+
+.suggestions-list.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.suggestions-list li {
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.suggestions-list li:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.hero-section {
+    max-width: 800px;
+}
+
+.service-section {
+    padding: 60px 5%;
+    margin: 0 auto;
+    max-width: 1200px;
+    text-align: center;
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.service-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius-large);
+    padding: 30px;
+    text-align: center;
+    width: 300px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.service-card.in-view {
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Styles pour le bouton d'action */
+.cta-button {
+    background: var(--button-bg);
+    color: var(--text-color);
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--border-radius-small);
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    transition: background 0.3s ease, transform 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.cta-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    transition: transform 0.5s ease;
+    transform: translateY(100%);
+    z-index: -1;
+}
+
+.cta-button:hover::after {
+    transform: translateY(0);
+}
+
+.cta-button:hover {
+    color: #fff;
+}
+
+/* Animation de mise en évidence */
+.highlight-item {
+    position: relative;
+    overflow: hidden;
+    animation: highlight-grow 0.8s forwards;
+}
+
+.highlight-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    animation: highlight-light 1s forwards;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 2s ease-out forwards;
+    opacity: 0;
+}
+
+.footer {
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    border-radius: var(--border-radius-large);
+    margin: 20px auto;
+    max-width: 1200px;
+    padding: 20px;
+    text-align: center;
+}
+
+.error-container {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 5px;
+    background: rgba(255, 0, 0, 0.2);
+    border: 1px solid rgba(255, 0, 0, 0.5);
+    border-radius: var(--border-radius-small);
+    margin-top: 5px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.error-container.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+.error-icon {
+    color: #ff0000;
+    font-size: 1.2rem;
+    margin-right: 8px;
+}
+
+.error-message {
+    color: #ffbaba;
+}
+
+/* Styles pour les modaux (e-mail et détails) */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.4s, opacity 0.4s;
+}
+
+.modal-overlay.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal-container {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--border-radius-large);
+    padding: 30px;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.4s ease;
+}
+
+.modal-overlay.show .modal-container {
+    transform: scale(1);
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.modal-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Styles spécifiques au modal de détails */
+.modal-container.service-modal {
+    text-align: center;
+}
+
+.modal-container.service-modal p {
+    font-size: 1.1em;
+    line-height: 1.5;
+    margin-bottom: 30px;
+}
+
+/* Styles du formulaire d'e-mail */
+.modal-container input,
+.modal-container textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--border-radius-small);
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-color);
+    outline: none;
+}
+
+.modal-container input::placeholder,
+.modal-container textarea::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.form-buttons .cta-button {
+    flex-grow: 1;
+}
+
+.form-buttons .cancel-button {
+    background: rgba(255, 0, 0, 0.2);
+}
+
+.form-buttons .cancel-button:hover::after {
+    background: rgba(255, 0, 0, 0.5);
+}
+
+.modal-error-message {
+    text-align: center;
+    color: #ffbaba;
+    font-size: 0.9em;
+    min-height: 2em;
+    margin-top: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-error-message.show {
+    opacity: 1;
+}
+
+/* Styles pour le pied de page et le bouton de copie */
+.footer-buttons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.copy-button {
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--border-radius-small);
+    flex-shrink: 0;
+}
+
+.copy-button svg {
+    width: 20px;
+    height: 20px;
+}
+
+.copy-button:hover::after {
+    transform: translateY(0);
+}
+
+.copy-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    transition: transform 0.5s ease;
+    transform: translateY(100%);
+    z-index: -1;
+}
+
+.copy-feedback {
+    position: absolute;
+    bottom: -30px;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    padding: 5px 10px;
+    border-radius: var(--border-radius-small);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.copy-feedback.show {
+    opacity: 1;
+}
+
+/* Media Queries pour la réactivité */
+@media (max-width: 1024px) {
+    .navbar {
+        padding: 10px 20px;
+    }
+    .search-container {
+        margin: 0 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 80px;
+    }
+    .header {
+        top: 0;
+        width: 100%;
+        max-width: 100%;
+        border-radius: 0;
+        padding: 5px 0;
+    }
+    .navbar {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        gap: 15px;
+    }
+    .nav-links {
+        display: none;
+    }
+    .search-container {
+        width: calc(100% - 20px);
+        margin: 0;
+    }
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    .card-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .service-card {
+        width: 90%;
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-img {
+        height: 30px;
+    }
+    .hero-title {
+        font-size: 2rem;
+    }
+}
+
+/* Custom Scrollbar for Webkit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border-radius: 10px;
+    border: 3px solid rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
